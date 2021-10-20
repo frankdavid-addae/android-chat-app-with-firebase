@@ -3,6 +3,7 @@ package com.example.androidchatapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSignInInfo;
     private Button btnSubmit;
 
-    private boolean isSigningUp = true;
+    private boolean isSigningUp = false;
 
     FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
 
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         tvSignInInfo = findViewById(R.id.tvSignInInfo);
         btnSubmit = findViewById(R.id.btnSubmit);
+
+        if (firebaseAuthInstance.getCurrentUser() != null) {
+            startActivity(new Intent(MainActivity.this, FriendsActivity.class));
+            finish();
+        }
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    startActivity(new Intent(MainActivity.this, FriendsActivity.class));
                     Toast.makeText(MainActivity.this, "Signed up successfully", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     Toast.makeText(MainActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -93,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    startActivity(new Intent(MainActivity.this, FriendsActivity.class));
                     Toast.makeText(MainActivity.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     Toast.makeText(MainActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
