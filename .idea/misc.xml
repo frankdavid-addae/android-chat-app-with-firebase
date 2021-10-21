@@ -5,10 +5,13 @@
       <map>
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2677083333333333" />
+        <entry key="app/src/main/res/drawable/message_input_bg.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/drawable/rounded_blue_shape.xml" value="0.2677083333333333" />
         <entry key="app/src/main/res/layout/activity_friends.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/activity_message.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2375" />
+        <entry key="app/src/main/res/layout/message_holder.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/user_holder.xml" value="0.2515625" />
         <entry key="app/src/main/res/menu/profile_menu.xml" value="0.2515625" />
       </map>

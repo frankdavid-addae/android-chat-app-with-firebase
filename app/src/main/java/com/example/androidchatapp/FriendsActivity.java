@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,8 +30,10 @@ public class FriendsActivity extends AppCompatActivity {
     private UsersAdapter usersAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     UsersAdapter.OnUserClickListener onUserClickListener;
+    String currentUserImageUrl;
 
     FirebaseDatabase firebaseDatabaseInstance = FirebaseDatabase.getInstance();
+    FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +56,16 @@ public class FriendsActivity extends AppCompatActivity {
         onUserClickListener = new UsersAdapter.OnUserClickListener() {
             @Override
             public void onUserClicked(int position) {
-                Toast.makeText(FriendsActivity.this, "Tapped on user " +
-                        users.get(position).getUsername(), Toast.LENGTH_SHORT
-                ).show();
+                startActivity(
+                    new Intent(FriendsActivity.this, MessageActivity.class)
+                    .putExtra("username_of_chat_mate", users.get(position).getUsername())
+                    .putExtra("email_of_chat_mate", users.get(position).getEmailAddress())
+                    .putExtra("image_of_chat_mate", users.get(position).getProfilePicture())
+                    .putExtra("current_user_image", currentUserImageUrl)
+                );
+//                Toast.makeText(FriendsActivity.this, "Tapped on user " +
+//                        users.get(position).getUsername(), Toast.LENGTH_SHORT
+//                ).show();
             }
         };
         getUsers();
@@ -88,6 +98,13 @@ public class FriendsActivity extends AppCompatActivity {
                 recyclerView.setAdapter(usersAdapter);
                 progressBar.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+
+                for (User user : users) {
+                    if (user.getEmailAddress().equals(firebaseAuthInstance.getCurrentUser().getEmail())) {
+                        currentUserImageUrl = user.getProfilePicture();
+                        return;
+                    }
+                }
             }
 
             @Override
